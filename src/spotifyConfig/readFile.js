@@ -13,21 +13,22 @@ function readConfig(){
     configExist =  fs.existsSync(`${os.homedir()}/spolaxyConfig/config.json`);
 
   if(configExist){
-     data = fs.readFileSync(`${os.homedir()}/spolaxyConfig/config.json`);
+     data = fs.readFileSync(`${os.homedir()}/spolaxyConfig/config.json`, "utf8");
      jsonData = JSON.parse(data);
         return jsonData;
   }
 }catch(err){
   console.log('Error from readConfig function: ', err);
+  return false;
 }
-  return configExist;
+  return false;
 }
 
 
 function writeConfig(clientId, redirectUri){
   let jsonText = `{
-   "clientId" : ${clientId},
-   "redirectUri" : ${redirectUri},
+   "clientId" : "${clientId}",
+   "redirectUri" : "${redirectUri}"
 }`
   try {
 if (!fs.existsSync(`${os.homedir()}/spolaxyConfig`)){

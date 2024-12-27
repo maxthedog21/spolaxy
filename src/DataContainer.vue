@@ -45,15 +45,11 @@
      methods: {
          async updateCreds(creds){
            let ifWrote =   await window.electronAPI.writeConfig(creds);
-             console.log('ifWrote: ', ifWrote);
              if(ifWrote){
                  this.clientId = creds.clientId;
                  this.redirectUri = creds.redirectURI;
                  this.start();
              }
-         },
-         async readFile(){
-
          },
         async searchTest(){
                 this.profile = 'loading...';

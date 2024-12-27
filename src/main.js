@@ -41,10 +41,8 @@ app.whenReady().then(() => {
     return readConfig();
   });
   ipcMain.handle('write-config', (event, creds) => {
-    console.log('event', event);
-    console.log('creds', creds);
-    let {clientId, redirectUri } = creds;
-    return writeConfig(clientId, redirectUri);
+    let {clientId, redirectURI } = creds;
+    return writeConfig(clientId, redirectURI);
   });
 
   createWindow();
