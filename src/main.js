@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
-import { readConfig } from "./spotifyConfig/readFile.js";
+import { readConfig, writeConfig } from "./spotifyConfig/readFile.js";
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
@@ -39,6 +39,12 @@ app.whenReady().then(() => {
 
   ipcMain.handle('read-config', (event) => {
     return readConfig();
+  });
+  ipcMain.handle('write-config', (event, creds) => {
+    console.log('event', event);
+    console.log('creds', creds);
+    let {clientId, redirectUri } = creds;
+    return writeConfig(clientId, redirectUri);
   });
 
   createWindow();

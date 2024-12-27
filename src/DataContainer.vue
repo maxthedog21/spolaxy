@@ -2,7 +2,7 @@
     <v-row align="center">
         <StartView
             v-if="isProjectReady"
-            @updateCreds="updateCred"
+            @updateCreds="updateCreds"
         ></StartView>
     </v-row>
 </template>
@@ -18,27 +18,40 @@
                  code: null,
                  accessToken: null,
                  profile: 'loading',
-                 clientId: '89eb97f421a949e4b83714f8b1c4c2d9',
-                 redirectUri: 'http://localhost:3001',
+                 clientId: null,
+                 redirectUri: null,
                  isFileRead: false,
              }
          },
     async mounted(){
-        // this.start();
      let data =   await window.electronAPI.readConfig();
-         console.log('window', data);
-         console.log('mounted');
+        if(data){
+            this.clientId = data.clientId;
+            this.redirectUri = data.redirectUri;
+            this.start();
+        }else{
+            this.isFileRead = true;
+        }
+
      },
      components: {
          StartView,
      },
      computed: {
          isProjectReady(){
-             return true;//  this.isFileRead && this.clientId !== null && this.redirectUri !== null;
+             return   this.isFileRead && this.clientId === null && this.redirectUri === null;
          },
      },
      methods: {
-         async updateCred(){},
+         async updateCreds(creds){
+           let ifWrote =   await window.electronAPI.writeConfig(creds);
+             console.log('ifWrote: ', ifWrote);
+             if(ifWrote){
+                 this.clientId = creds.clientId;
+                 this.redirectUri = creds.redirectURI;
+                 this.start();
+             }
+         },
          async readFile(){
 
          },
@@ -53,7 +66,7 @@
              if(this.code === null){
                 getAuthorization(this.clientId, this.redirectUri);
              }else{
-                 this.accessToken = await getAccessToken('89eb97f421a949e4b83714f8b1c4c2d9', 'http://localhost:3001', this.code);
+                 this.accessToken = await getAccessToken(this.clientId, this.redirectUri, this.code);
              }
          },
 

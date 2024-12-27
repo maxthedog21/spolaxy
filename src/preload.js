@@ -3,5 +3,6 @@
 const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  readConfig: () => ipcRenderer.invoke('read-config')
+  readConfig: () => ipcRenderer.invoke('read-config'),
+  writeConfig: (creds) => ipcRenderer.invoke('write-config', creds)
 })
