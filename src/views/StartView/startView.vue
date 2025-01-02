@@ -60,6 +60,7 @@
          },
      mounted(){
        //  this.start();
+          window.addEventListener("resize", this.updateCanvasSize);
          this.canvas = document.getElementById('canvas');
          this.ctx = this.canvas.getContext("2d");
          this.canvas.width = document.body.offsetWidth;
@@ -69,7 +70,14 @@
          this.last = this.timestamp();
          window.requestAnimationFrame(this.runStars);
      },
+      unmounted() {
+          window.removeEventListener("resize", this.updateCanvasSize);
+      },
      methods: {
+      updateCanvasSize(){
+         this.canvas.width = document.body.offsetWidth;
+         this.canvas.height = document.body.offsetHeight;
+      },
          updateCreds(){
              let creds = {clientId: this.clientId, redirectURI: this.redirectURI};
              console.log('creds', creds);

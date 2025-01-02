@@ -4,6 +4,9 @@
             v-if="isProjectReady"
             @updateCreds="updateCreds"
         ></StartView>
+        <GalaxyView
+            v-else
+        ></GalaxyView>
     </v-row>
 </template>
 <script>
@@ -11,6 +14,7 @@
  import { getAccessToken } from "@/spotifyConfig/spotifyToken.js";
  import { getProfile } from "@/api/spotify/spotifyWebAPI/songs.js";
  import StartView from "@/views/StartView/startView.vue";
+ import GalaxyView from "@/views/GalaxyView/GalaxyView.vue"
  export default {
      name: "DataContainer",
          data(){
@@ -36,6 +40,7 @@
      },
      components: {
          StartView,
+         GalaxyView,
      },
      computed: {
          isProjectReady(){
