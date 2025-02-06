@@ -22,7 +22,7 @@ function base64encode(input){
 
 
 async function getAuthorization(clientId, redirectUri){
-  const scope = 'user-read-private user-read-email streaming';
+  const scope = 'user-read-private user-read-email streaming user-read-playback-state user-modify-playback-state';
   const authUrl = new URL("https://accounts.spotify.com/authorize")
   let codeVerifier = generateRandomString(64);
   let hashed = await sha256(codeVerifier);

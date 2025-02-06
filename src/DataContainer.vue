@@ -1,5 +1,5 @@
 <template>
-    <v-row align="center">
+        isProjectReady {{ isProjectReady }}
         <StartView
             v-if="isProjectReady"
             @updateCreds="updateCreds"
@@ -8,7 +8,6 @@
             v-else
             :accessToken="accessToken"
         ></GalaxyView>
-    </v-row>
 </template>
 <script>
  import {  getAuthorization } from "@/spotifyConfig/spotifySetup.js";
@@ -29,7 +28,7 @@
              }
          },
     async mounted(){
-     let data =   await window.electronAPI.readConfig();
+     let data =  this.getCreds();
         if(data){
             this.clientId = data.clientId;
             this.redirectUri = data.redirectUri;
@@ -49,26 +48,42 @@
          },
      },
      methods: {
+        getCreds(){
+           let clientId = localStorage.getItem("clientId");
+           let redirectUri = localStorage.getItem("redirectURI");
+           if(!!clientId && !!redirectUri){
+            return {
+                "clientId": clientId,
+                "redirectUri": redirectUri,
+            }
+           }
+           return null;
+
+        },
          async updateCreds(creds){
-           let ifWrote =   await window.electronAPI.writeConfig(creds);
-             if(ifWrote){
                  this.clientId = creds.clientId;
                  this.redirectUri = creds.redirectURI;
+                 localStorage.setItem("clientId", creds.clientId);
+                 localStorage.setItem("redirectURI", creds.redirectURI);
                  this.start();
-             }
          },
         async searchTest(){
                 this.profile = 'loading...';
                  this.profile = await getProfile(this.accessToken);
-                 console.log('profile: ', this.profile);
          },
         async start(){
             const urlParams = new URLSearchParams(window.location.search);
             this.code = urlParams.get('code');
+            let refreshToken = localStorage.getItem('refreshToken');
              if(this.code === null){
                 getAuthorization(this.clientId, this.redirectUri);
              }else{
-                 this.accessToken = await getAccessToken(this.clientId, this.redirectUri, this.code);
+                let tempCode = await getAccessToken(this.clientId, this.redirectUri, this.code, refreshToken);
+                if(tempCode === 'REDO'){
+                    getAuthorization(this.clientId, this.redirectUri);
+                }else{
+                    this.accessToken = tempCode;
+                }
              }
          },
 

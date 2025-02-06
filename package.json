@@ -1,41 +1,36 @@
 {
-  "name": "spolaxy",
-  "productName": "spolaxy",
-  "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": ".vite/build/main.js",
+  "name": "spolaxy-temp",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "@mdi/font": "7.4.47",
+    "roboto-fontface": "*",
+    "vue": "^3.4.31",
+    "vuetify": "^3.6.14"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.6.0",
-    "@electron-forge/maker-deb": "^7.6.0",
-    "@electron-forge/maker-rpm": "^7.6.0",
-    "@electron-forge/maker-squirrel": "^7.6.0",
-    "@electron-forge/maker-zip": "^7.6.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.6.0",
-    "@electron-forge/plugin-fuses": "^7.6.0",
-    "@electron-forge/plugin-vite": "^7.6.0",
-    "@electron/fuses": "^1.8.0",
-    "electron": "33.2.1",
-    "vite": "^5.4.11",
-    "vite-plugin-vuetify": "^2.0.4",
-    "vuetify": "^3.7.6"
-  },
-  "keywords": [],
-  "author": {
-    "name": "Maximilian Moore",
-    "email": "39575989+maxthedog21@users.noreply.github.com"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@mdi/font": "^7.4.47",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "electron-squirrel-startup": "^1.0.1",
-    "vue": "^3.5.13"
+    "@eslint/js": "^9.14.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "eslint": "^9.14.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.4.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "sass": "1.77.8",
+    "sass-embedded": "^1.77.8",
+    "unplugin-fonts": "^1.1.1",
+    "unplugin-vue-components": "^0.27.2",
+    "unplugin-vue-router": "^0.10.0",
+    "vite": "^5.4.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vue-router": "^4.4.0"
   }
 }
