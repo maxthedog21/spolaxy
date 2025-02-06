@@ -8,6 +8,7 @@
           return {
           canvas: null,
           ctx: null,
+        player: null,
         planet: {
             x: 0,
             y: 0,
@@ -18,6 +19,18 @@
           };
       },
       mounted(){
+          window.onSpotifyWebPlaybackSDKReady = () => {
+              this.player = new Spotify.Player({
+                  name: "Player",
+                  getOAuthToken: cb => { cb(this.accessToken) },
+                  volume: 0.5,
+              });
+         this.player.addListener('ready', ({ device_id }) => {
+            console.log('Ready with Device ID', device_id);
+            this.player.togglePlay();
+        });
+          this.player.connect();
+          }
           window.addEventListener("resize", this.updateCanvasSize);
           this.canvas = document.getElementById('canvas');
           this.ctx = this.canvas.getContext("2d");
@@ -28,6 +41,11 @@
       unmounted() {
           window.removeEventListener("resize", this.updateCanvasSize);
       },
+      props: {
+          accessToken: {
+              required: true,
+          },
+      },
       computed: {
           centerX(){
               return this.canvas.width / 2;
@@ -37,6 +55,13 @@
           },
       },
       methods: {
+          playbackCallback(){
+              this.player = new Spotify.Player({
+                  name: "Player",
+                  getOAuthToken: cb => { cb(this.accessToken) },
+                  volume: 0.5,
+              });
+          },
       updateCanvasSize(){
          this.canvas.width = document.body.offsetWidth;
          this.canvas.height = document.body.offsetHeight;

@@ -6,6 +6,7 @@
         ></StartView>
         <GalaxyView
             v-else
+            :accessToken="accessToken"
         ></GalaxyView>
     </v-row>
 </template>
