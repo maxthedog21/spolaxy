@@ -4,6 +4,6 @@ Spolaxy is a Spotify client that uses the Spotify web api and web playback sdk. 
 
 ## In use
 
-![til](./websitePic.gif)
+![til](./websitePic.png)
 
 ![til](./website.gif)
